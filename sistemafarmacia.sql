@@ -354,4 +354,22 @@ DELIMITER ;
 
 -- Executando o procedure acima
 CALL atualizar_valor_produto(1,19.90);
-  
+
+-- Funcition: calcular o valor total em estoque
+DELIMITER $$
+
+CREATE FUNCTION valor_total_produto(p_cod INT)
+RETURNS DECIMAL (10,2)
+DETERMINISTIC
+BEGIN 
+    DECLARE total DECIMAL (10,2)
+
+    SELECT quantproduto * valorproduto
+    INTO total 
+    FROM produto
+    WHERE codproduto = p_cod;
+
+    RETURN total;
+    END$$
+
+    DELIMITER;  
