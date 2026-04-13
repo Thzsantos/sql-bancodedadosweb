@@ -296,4 +296,62 @@ ORDER BY valorproduto ASC;
     45.40,
     '32165498000166'
   )
+
+-- criando novo usuario de banco de dados
+  CREATE USER  'usuario_farmacia'@'localhost'
+  IDENTIFIED BY 'senha123';
+
+  -- concedendo permissoes - Total
+  GRANT ALL PRIVILEGES
+  ON farmacianova.*
+  TO 'usuario_farmacia'@'localhost';
+
+  GRANT SELECT
+  ON farmacianova.*
+  TO 'usuario_farmacia'@'localhost'
+
+-- revogando permissoes de um usuario
+  GRANT SELECT, INSERT
+  ON farmacianova.*
+  TO 'usuario_farmacia'@'localhost';
+
+-- revogando todas as permissoes do usuario
+REVOKE ALL PRIVILEGES
+ON farmacianova.*
+FROM 'usuario_farmacia'@'localhost';
+
+
+-- Excluíndo usuário
+DROP USER 'usuario_farmacia'@'localhost';
+
+-- procedure: listar produtos de uma farmácia
+DELIMITER $$ 
+
+CREATE PROCEDURE lista_produtos_farmacia (IN cnpjFarm VARCHAR (14))
+BEGIN
+  SELECT codproduto, quantproduto, valorproduto
+  FROM produto
+  WHERE cnpj_farmacia = cnpjFarm;
+  END$$ 
+  DELIMITER ;
+
+  -- Executando o procedure
+  CALL lista_produtos_farmacia ('12345678000199')
+
+DELIMITER $$
+ 
+  CREATE PROCEDURE atualizar_valor_produto(
+    IN p_cod INT,
+    IN p_valor DECIMAL(10,2)
+  )
+  BEGIN 
+    UPDATE produto
+    SET valorproduto = p_valor
+    WHERE codproduto = p_cod;
+END$$
+
+DELIMITER ;
+
+-- Executando o procedure acima
+CALL atualizar_valor_produto(1,19.90);
   
