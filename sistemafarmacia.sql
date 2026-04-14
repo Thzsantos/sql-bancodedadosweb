@@ -2,41 +2,39 @@
 CREATE DATABASE farmacianova;
 
 --criando a primeira tabela
-CREATE TABLE
-  farmacia (
-    cnpj VARCHAR(14) PRIMARY KEY,
-    telefone VARCHAR(11) NOT NULL,
-    nomefarmacia VARCHAR(255) NOT NULL,
-    rua VARCHAR(255) NOT NULL,
-    numero CHAR(8) NOT NULL,
-    complemento VARCHAR(200),
-    bairro VARCHAR(100) NOT NULL,
-    cidade VARCHAR(100) NOT NULL,
-    estado CHAR(2) NOT NULL,
-    CEP VARCHAR(8) NOT NULL
-  );
+CREATE TABLE farmacia (
+  cnpj VARCHAR(14) PRIMARY KEY,
+  telefone VARCHAR(11) NOT NULL,
+  nomefarmacia VARCHAR(255) NOT NULL,
+  rua VARCHAR(255) NOT NULL,
+  numero CHAR(8) NOT NULL,
+  complemento VARCHAR(200),
+  bairro VARCHAR(100) NOT NULL,
+  cidade VARCHAR(100) NOT NULL,
+  estado CHAR(2) NOT NULL,
+  CEP VARCHAR(8) NOT NULL
+);
 
 --criando a segunda tabela
-CREATE TABLE
-  farmaceutico (
-    rg INT PRIMARY KEY,
-    nomefarmaceutico VARCHAR(255) NOT NULL,
-    cnpj_farmacia VARCHAR(14),
-    FOREIGN KEY (cnpj_farmacia) REFERENCES farmacia (cnpj)
-  );
+CREATE TABLE farmaceutico (
+  rg INT PRIMARY KEY,
+  nomefarmaceutico VARCHAR(255) NOT NULL,
+  cnpj_farmacia VARCHAR(14),
+  FOREIGN KEY (cnpj_farmacia) REFERENCES farmacia (cnpj)
+);
 
 --criando a terceira tabela
-CREATE TABLE
-  produto (
-    codproduto INT AUTO_INCREMENT PRIMARY KEY,
-    quantproduto INT NOT NULL,
-    valorproduto DECIMAL(10, 2) NOT NULL,
-    cnpj_farmacia VARCHAR(14),
-    FOREIGN KEY (cnpj_farmacia) REFERENCES farmacia (cnpj)
-  );
-  
+CREATE TABLE produto (
+  codproduto INT AUTO_INCREMENT PRIMARY KEY,
+  quantproduto INT NOT NULL,
+  valorproduto DECIMAL(10, 2) NOT NULL,
+  cnpj_farmacia VARCHAR(14),
+  FOREIGN KEY (cnpj_farmacia) REFERENCES farmacia (cnpj)
+);
+
 --Alterando o nome de uma coluna existente
-ALTER TABLE farmacia CHANGE estado UF CHAR(2) NOT NULL;
+ALTER TABLE
+  farmacia CHANGE estado UF CHAR(2) NOT NULL;
 
 --Inserindo um dado na primeira tabela
 INSERT INTO
@@ -118,8 +116,6 @@ VALUES
     '11013001'
   );
 
-
-
 --Deletando as tabelas
 DROP TABLE farmacia;
 
@@ -159,217 +155,395 @@ VALUES
   (4, 20, 45.00, '32165498000166');
 
 -- Alterando um dado na tevale farmacia
-update farmacia
+update
+  farmacia
 set
   telefone = '11999998888'
 where
   cnpj = '12345678000199';
 
-update produto
+update
+  produto
 set
   quantproduto = 80,
   valorproduto = 14.50
 where
   codproduto = 1;
-  
+
 -- selecionando todos os dados de todas as coulnas
-SELECT * FROM farmacia;
+SELECT
+  *
+FROM
+  farmacia;
 
 -- selecionando dados de uma coluna
-SELECT nomefarmacia
-FROM farmacia;
+SELECT
+  nomefarmacia
+FROM
+  farmacia;
 
 -- selecionando dados de duas coluna
-SELECT nomefarmacia,cidade
-FROM farmacia;
+SELECT
+  nomefarmacia,
+  cidade
+FROM
+  farmacia;
 
 -- selecionando com filtro
-SELECT * FROM farmacia
-WHERE cidade = 'São Paulo';
+SELECT
+  *
+FROM
+  farmacia
+WHERE
+  cidade = 'São Paulo';
 
-SELECT * FROM farmacia
-WHERE cidade = 'São paulo' AND UF = 'SP';
+SELECT
+  *
+FROM
+  farmacia
+WHERE
+  cidade = 'São paulo'
+  AND UF = 'SP';
 
+SELECT
+  *
+FROM
+  farmacia
+WHERE
+  cidade = 'São Paulo'
+  OR cidade = 'Campinas';
 
-SELECT * FROM farmacia
-WHERE cidade ='São Paulo' OR cidade = 'Campinas';
-
-SELECT telefone
-FROm farmacia
-WHERE cidade = 'São Paulo' OR cidade = 'Campinas';
-
+SELECT
+  telefone
+FROm
+  farmacia
+WHERE
+  cidade = 'São Paulo'
+  OR cidade = 'Campinas';
 
 -- selecionado com BETWEEN (entre) e AND
-SELECT * FROM produto
-WHERE valorproduto BETWEEN 10.00 AND 30.00;
+SELECT
+  *
+FROM
+  produto
+WHERE
+  valorproduto BETWEEN 10.00
+  AND 30.00;
 
 -- select com maior que (>)
-SELECT * FROM produto
-WHERE valorproduto > 20.00;
+SELECT
+  *
+FROM
+  produto
+WHERE
+  valorproduto > 20.00;
 
 -- select com igual a (=)
-SELECT * FROM produto
-WHERE valorproduto = 45.40;
+SELECT
+  *
+FROM
+  produto
+WHERE
+  valorproduto = 45.40;
 
 -- select menor ou igual a (<=)
-SELECT * FROM produto
-WHERE valorproduto <= 50;
-
+SELECT
+  *
+FROM
+  produto
+WHERE
+  valorproduto <= 50;
 
 -- select combinando > AND <=
-SELECT * FROM produto
-WHERE valorproduto > 10.00 AND valorproduto <= 30.00;
+SELECT
+  *
+FROM
+  produto
+WHERE
+  valorproduto > 10.00
+  AND valorproduto <= 30.00;
 
 -- Select com WHERE e LIKE
-SELECT * FROM farmacia
-WHERE nomefarmacia LIKE 'farmacia%';
+SELECT
+  *
+FROM
+  farmacia
+WHERE
+  nomefarmacia LIKE 'farmacia%';
 
 -- Select com WHERE e LIKE
-SELECT * FROM farmacia
-WHERE nomefarmacia LIKE '%Vida%';
+SELECT
+  *
+FROM
+  farmacia
+WHERE
+  nomefarmacia LIKE '%Vida%';
 
-SELECT * FROM farmacia
-WHERE nomefarmacia LIKE '%a%';
+SELECT
+  *
+FROM
+  farmacia
+WHERE
+  nomefarmacia LIKE '%a%';
 
 -- selecionado com ordem ascendente/crescente
-SELECT * FROM farmacia
-ORDER BY nomefarmacia ASC;
+SELECT
+  *
+FROM
+  farmacia
+ORDER BY
+  nomefarmacia ASC;
 
 -- selecionando com ordem descendente /decrescente
-SELECT * FROM produto
-ORDER BY valorproduto DESC;
+SELECT
+  *
+FROM
+  produto
+ORDER BY
+  valorproduto DESC;
 
 -- selecionado com limite
-SELECT * FROM produto
-LIMIT 2
-
--- selecionado com WHERE < ORDER BY e LIMIT juntos
-SELECT * FROM produto
-WHERE valorproduto > 20.00
-ORDER BY valorproduto DESC
-LIMIT 1;
+SELECT
+  *
+FROM
+  produto
+LIMIT
+  2 -- selecionado com WHERE < ORDER BY e LIMIT juntos
+SELECT
+  *
+FROM
+  produto
+WHERE
+  valorproduto > 20.00
+ORDER BY
+  valorproduto DESC
+LIMIT
+  1;
 
 --  select JOIN ON
-SELECT * FROM farmacia
-JOIN produto
-ON farmacia.cnpj = produto.cnpj_farmacia;
+SELECT
+  *
+FROM
+  farmacia
+  JOIN produto ON farmacia.cnpj = produto.cnpj_farmacia;
 
 -- select INNER JOIN ON   PRECISO CORRIGIR O FAMACEUTICO
-SELECT * FROM farmacia
-INNER JOIN famaceutico
-ON farmacia.cnpj = famaceutico.cnpj_farmacia;
-
+SELECT
+  *
+FROM
+  farmacia
+  INNER JOIN famaceutico ON farmacia.cnpj = famaceutico.cnpj_farmacia;
 
 -- SELECT inner join COM WHERE
-SELECT nomefarmacia, nomefarmaceutico
-FROM Farmacia
-INNER JOIN famaceutico
-ON farmacia.cnpj = famaceutico.cnpj_farmacia
-WHERE farmacia.cidade = 'São Paulo';
+SELECT
+  nomefarmacia,
+  nomefarmaceutico
+FROM
+  Farmacia
+  INNER JOIN famaceutico ON farmacia.cnpj = famaceutico.cnpj_farmacia
+WHERE
+  farmacia.cidade = 'São Paulo';
 
 --select INNER JOIN com ORDER BY ASC
-SELECT nomefarmacia,valorproduto
-FROM Farmacia
-INNER JOIN produto
-ON farmacia.cnpj =produto.cnpj_farmacia
-ORDER BY valorproduto ASC;
+SELECT
+  nomefarmacia,
+  valorproduto
+FROM
+  Farmacia
+  INNER JOIN produto ON farmacia.cnpj = produto.cnpj_farmacia
+ORDER BY
+  valorproduto ASC;
 
-
-
-
-
-
-
-
-  -- deletando um dado de uma tabela
-  delete from produto
-  where codproduto = 4
-  
-  INSERT INTO
+-- deletando um dado de uma tabela
+delete from
+  produto
+where
+  codproduto = 4
+INSERT INTO
   produto (
     quantproduto,
     valorproduto,
     cnpj_farmacia
-  )VALUES
-  (
-    25,
-    45.40,
-    '32165498000166'
   )
+VALUES
+  (25, 45.40, '32165498000166') -- criando novo usuario de banco de dados
+  CREATE USER 'usuario_farmacia' @'localhost';
 
--- criando novo usuario de banco de dados
-  CREATE USER  'usuario_farmacia'@'localhost'
-  IDENTIFIED BY 'senha123';
+IDENTIFIED BY 'senha123';
 
-  -- concedendo permissoes - Total
-  GRANT ALL PRIVILEGES
-  ON farmacianova.*
-  TO 'usuario_farmacia'@'localhost';
+-- concedendo permissoes - Total
+GRANT ALL PRIVILEGES ON farmacianova.* TO 'usuario_farmacia' @'localhost';
 
-  GRANT SELECT
-  ON farmacianova.*
-  TO 'usuario_farmacia'@'localhost'
+GRANT
+SELECT
+  ON farmacianova.* F TO 'usuario_farmacia' @'localhost';
 
 -- revogando permissoes de um usuario
-  GRANT SELECT, INSERT
-  ON farmacianova.*
-  TO 'usuario_farmacia'@'localhost';
+GRANT
+SELECT
+,
+INSERT
+  ON farmacianova.* TO 'usuario_farmacia' @'localhost';
 
 -- revogando todas as permissoes do usuario
-REVOKE ALL PRIVILEGES
-ON farmacianova.*
-FROM 'usuario_farmacia'@'localhost';
-
+REVOKE ALL PRIVILEGES ON farmacianova.*
+FROM
+  'usuario_farmacia' @'localhost';
 
 -- Excluíndo usuário
-DROP USER 'usuario_farmacia'@'localhost';
+DROP USER 'usuario_farmacia' @'localhost';
 
 -- procedure: listar produtos de uma farmácia
-DELIMITER $$ 
+DELIMITER $ $ CREATE PROCEDURE lista_produtos_farmacia (IN cnpjFarm VARCHAR (14)) BEGIN
+SELECT
+  codproduto,
+  quantproduto,
+  valorproduto
+FROM
+  produto
+WHERE
+  cnpj_farmacia = cnpjFarm;
 
-CREATE PROCEDURE lista_produtos_farmacia (IN cnpjFarm VARCHAR (14))
-BEGIN
-  SELECT codproduto, quantproduto, valorproduto
-  FROM produto
-  WHERE cnpj_farmacia = cnpjFarm;
-  END$$ 
-  DELIMITER ;
+END $ $ DELIMITER;
 
-  -- Executando o procedure
-  CALL lista_produtos_farmacia ('12345678000199')
+-- Executando o procedure
+CALL lista_produtos_farmacia ('12345678000199') DELIMITER $ $ CREATE PROCEDURE atualizar_valor_produto(
+  IN p_cod INT,
+  IN p_valor DECIMAL(10, 2)
+) BEGIN
+UPDATE
+  produto
+SET
+  valorproduto = p_valor
+WHERE
+  codproduto = p_cod;
 
-DELIMITER $$
- 
-  CREATE PROCEDURE atualizar_valor_produto(
-    IN p_cod INT,
-    IN p_valor DECIMAL(10,2)
-  )
-  BEGIN 
-    UPDATE produto
-    SET valorproduto = p_valor
-    WHERE codproduto = p_cod;
-END$$
-
-DELIMITER ;
+END $ $ DELIMITER;
 
 -- Executando o procedure acima
-CALL atualizar_valor_produto(1,19.90);
+CALL atualizar_valor_produto(1, 19.90);
 
--- Funcition: calcular o valor total em estoque
-DELIMITER $$
+-- Funcition: calcular o valor total
+DELIMITER $ $ CREATE FUNCTION valor_total_produto(p_cod INT) RETURNS DECIMAL (10, 2) DETERMINISTIC BEGIN DECLARE total DECIMAL (10, 2);
 
-CREATE FUNCTION valor_total_produto(p_cod INT)
-RETURNS DECIMAL (10,2)
-DETERMINISTIC
-BEGIN 
-    DECLARE total DECIMAL (10,2)
+SELECT
+  quantproduto * valorproduto INTO total
+FROM
+  produto
+WHERE
+  codproduto = p_cod;
 
-    SELECT quantproduto * valorproduto
-    INTO total 
-    FROM produto
-    WHERE codproduto = p_cod;
+RETURN total;
 
-    RETURN total;
-    END$$
+END $ $ DELIMITER;
 
-    DELIMITER;  
+--  usando a função acima
+SELECT
+  valor_total_produto(1) AS total_em_estoque;
+
+-- Function: quantidade de produtos por farmácia
+DELIMITER $ $ CREATE FUNCTION qtd_produtos_farmacia(p_cnpj VARCHAR(14)) RETURNS INT DETERMINISTIC BEGIN DECLARE total INT;
+
+SELECT
+  COUNT(*) INTO total
+FROM
+  produto
+WHERE
+  cnpj_farmacia = p_cnpj;
+
+RETURN total;
+
+END $ $ DELIMITER;
+
+-- Executando a função acima
+SELECT
+  qtd_produtos_farmacia('12345678000199') -- Função de soma
+  DELIMITER $ $ DROP FUNCTION IF EXISTS qtd_produtos_farmacia $ $ CREATE FUNCTION qtd_produtos_farmacia(p_cnpj VARCHAR(14)) RETURNS INT DETERMINISTIC BEGIN DECLARE total INT;
+
+SELECT
+  SUM(quantproduto) INTO total
+FROM
+  produto
+WHERE
+  cnpj_farmacia = p_cnpj;
+
+RETURN total;
+
+END $ $ DELIMITER;
+
+-- testando a funçao acima
+select
+  qtd_produtos_farmacia(12345678000199) as total_em_estoque;
+
+-- trigger: impedir quantidade negativa (BEFORE INSERT)
+DELIMITER $ $ CREATE TRIGGER trg_before_insert_produto BEFORE
+INSERT
+  ON produto FOR EACH ROW BEGIN IF NEW.quantproduto < 0 THEN
+SET
+  NEW.quantproduto = 0;
+
+END IF;
+
+END $ $ DELIMITER;
+
+-- tentando inserir um valor negativo 
+INSERT INTO
+  produto (quantproduto, valorproduto, cnpj_farmacia)
+VALUES
+  (-10, -20.00, '12345678000199') -- trigger: impedir valor negativo (BEFORE UPDATE)
+  DELIMITER $ $ CREATE TRIGGER trg_before_update_produto BEFORE
+UPDATE
+  ON produto FOR EACH ROW BEGIN IF NEW.valorproduto < 0 THEN
+SET
+  NEW.valorproduto = OLD.valorproduto;
+
+END IF;
+
+END $ $ DELIMITER;
+
+-- testando o código acima
+UPDATE
+  produto
+SET
+  valorproduto = -25.00
+WHERE
+  codproduto = 1;
+
+-- view: farmacia + produto
+CREATE VIEW vm_farmcia_produto AS
+SELECT
+  f.nomefarmacia,
+  f.cidade,
+  p.codproduto,
+  p.quantproduto,
+  p.valorproduto
+FROM
+  farmacia f
+  INNER JOIN produto p ON f.cnpj = p.cnpj_farmacia;
+
+-- testando o código acima
+SELECT
+  *
+FROM
+  vm_farmcia_produto;
+
+-- View: farmácia + farmacêutico
+CREATE
+OR REPLACE VIEW vw_farmaceutico_farmacia AS
+SELECT
+  fa.nomefarmacia,
+  fa.cidade,
+  fm.nomefarmaceutico
+FROM
+  farmacia fa
+  INNER JOIN farmaceutico fm ON fa.cnpj = fm.cnpj_farmacia;
+
+-- View: produtos caros
+CREATE
+OR REPLACE VIEW vw_produtos_caros AS
+SELECT
+  *
+FROM
+  produto
+WHERE
+  valorproduto > 30;
