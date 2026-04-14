@@ -128,7 +128,7 @@ DROP DATABASE farmacianova;
 
 -- inserindo dois dados na segunda tabela com falha minha
 INSERT INTO
-  famaceutico (rg, nomefarmaceutico, cnpj_farmacia)
+  farmaceutico (rg, nomefarmaceutico, cnpj_farmacia)
 VALUES
   (
     123456789,
@@ -332,7 +332,7 @@ SELECT
   *
 FROM
   farmacia
-  INNER JOIN famaceutico ON farmacia.cnpj = famaceutico.cnpj_farmacia;
+  INNER JOIN farmaceutico ON farmacia.cnpj = farmaceutico.cnpj_farmacia;
 
 -- SELECT inner join COM WHERE
 SELECT
@@ -340,7 +340,7 @@ SELECT
   nomefarmaceutico
 FROM
   Farmacia
-  INNER JOIN famaceutico ON farmacia.cnpj = famaceutico.cnpj_farmacia
+  INNER JOIN farmaceutico ON farmacia.cnpj = farmaceutico.cnpj_farmacia
 WHERE
   farmacia.cidade = 'São Paulo';
 
