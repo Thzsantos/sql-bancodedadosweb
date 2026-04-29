@@ -1,0 +1,131 @@
+//Criando novo Banco:
+use tipodedado
+
+//inserindo collection e document:
+db.strings.insert({nome: "Ana"})
+db.strings.insert({nome: "Claudia"})
+
+//exibindo documents:
+db.strings.find()
+
+//Para saber o tipo de dado eu salvo em uma constante:
+const Ana = db.strings.findOne({nome: "Ana"})
+
+acessando primeiro dado específico da constante:
+Ana.nome
+
+ver qual é o tipo de dado acima:
+typeof Ana.nome
+
+ver os outros tipos de dados:
+typeof Ana._id
+typeof Ana
+
+// Criando um collection de array:
+db.arrays.insertOne({motos: ["Honda", "Suzuki", "Yamaha"]})
+
+// Mostrando a collection acima na tela:
+db.arrays.find()
+
+// Criando constante para guardar os documents:
+const motos = db.arrays.findOne()
+
+Exibindo o que guardou na constante
+motos
+
+acessando os elementos 
+motos.motos
+
+tipos de dados:
+typeof motos
+typeof motos.motos
+
+acessar o que está guardado nas posições pela constante:
+motos.motos[0]
+motos.motos[1]
+motos.motos[2]
+
+Descobrindo o tipo de dado da posição
+typeof motos.motos[0]
+
+
+// Criando um collection de array:
+db.arrays.insertOne({motos: ["Honda", "Suzuki", "Yamaha"]})
+
+// Mostrando a collection acima na tela:
+db.arrays.find()
+
+
+ 
+//criando collection  de data: 
+db.dates.insertOne({nome: "Adriana", create_at: new Date()})
+ 
+//exibindoos dados na tela, veja que a data é um ISO:
+db.dates.find()
+ 
+//criando um constante para o document acima:
+const data = db.dates.find()
+ 
+//exibindo na tela:
+data
+ 
+//tipo de dados:
+typeof data.create_at
+ 
+//criando collections:
+db.numbers.insertOne({double:13.5, outro: 43, inteiros: NumberInt("37")})
+ 
+//exibindo na tela: 
+db.numbers.find()
+
+// Criar uma constante para o dado acima:
+const numeros = db.numbers.find()
+
+// Exibindo na tela:
+numeros
+
+// Quais são os tipos de dados:
+typeof numeros.double
+typeof numeros.outro
+typeof numeros.inteiro
+
+// Criando uma collection de document:
+db.documents.insertOne({
+  nome: "Patricia",
+  dados: {
+    trabalha: false,
+    linguas: ["Português", "Espanhol"]
+  }
+})
+
+// Exibindo na tela:
+db.documents.find()
+
+//Criar constante para o document acima:
+const info = db.documents.find()
+
+//Exibindo:
+info
+
+//Exibindo tipo de dado:
+typeof info.dados
+
+//Criando collection com boll (aceita True ou False):
+db.bools.insertOne({nome:"Henrique", trabalha: false})
+db.bools.insertOne({nome:"Maria Eduarda", trabalha: true})
+ 
+//Exibindo:
+db.bools.find()
+
+// Criar uma constante para o dado acima:
+const booleana = db.bools.find()
+
+// Exibindo:
+booleana
+
+// Exibindo tipo de dado:
+typeof booleana.trabalha
+
+Excluindo o banco de dados:
+db.dropDatabase()
+
