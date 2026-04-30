@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel Admin</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f4f9; }
+    h2 { text-align: center; margin-top: 20px; }
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      margin: 20px auto;
+      background: #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th { background-color: #e8adf7; color: #fff; }
+    tr:hover { background-color: #f2f2f2; }
+    input {
+      width: 90%;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      margin: 2px;
+    }
+    .btn-edit { background: #e8adf7; color: #fff; }
+    .btn-edit:hover { background: #d39de0; }
+    .btn-del { background: #e74c3c; color: #fff; }
+    .btn-del:hover { background: #c0392b; }
+    .btn-save { background: #4CAF50; color: #fff; }
+    .btn-save:hover { background: #45a049; }
+  </style>
+</head>
+<body>
+  <h2>Painel de Administração</h2>
+  <div style="text-align:center; margin:20px;">
+    <a href="/" class="btn btn-edit">Cadastrar novo usuário</a>
+    <a href="/deletar_todos" class="btn btn-del">Apagar todos os usuários</a>
+  </div>
+  <table>
+    <tr>
+      <th>ID</th><th>Nome</th><th>Email</th><th>Telefone</th><th>Ações</th>
+    </tr>
+    {% for u in usuarios %}
+    <tr>
+      <form method="POST" action="/atualizar/{{ u[0] }}">
+        <td>{{ u[0] }}</td>
+        <td><input type="text" name="nome" value="{{ u[1] }}"></td>
+        <td><input type="email" name="email" value="{{ u[2] }}"></td>
+        <td><input type="text" name="telefone" value="{{ u[3] }}"></td>
+        <td>
+          <button type="submit" class="btn btn-save">Salvar</button>
+          <a href="/deletar/{{ u[0] }}" class="btn btn-del">Apagar</a>
+        </td>
+      </form>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
